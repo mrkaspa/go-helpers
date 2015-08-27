@@ -2,8 +2,11 @@ package helpers
 
 import (
 	"crypto/rand"
+	"crypto/sha1"
+	"encoding/hex"
 	"fmt"
 	rnd "math/rand"
+	"os"
 	"reflect"
 	"strings"
 	"time"
@@ -120,4 +123,17 @@ func DiffSlices(X, Y []int) []int {
 	}
 
 	return ret
+}
+
+//MD5 encription
+func MD5(cad string) string {
+	hash := sha1.New()
+	hash.Write([]byte(cad))
+	return hex.EncodeToString(hash.Sum(nil))
+}
+
+//FileExists verifies if a filepath exists
+func FileExists(name string) bool {
+	_, err := os.Stat(name)
+	return !os.IsNotExist(err)
 }
